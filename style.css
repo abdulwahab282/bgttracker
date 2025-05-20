@@ -1,28 +1,5 @@
-/* Define a height for the parent container */
-body {
-    height: 180vh; 
-    margin: auto;
-}
-
-.navbar {
-    background-color: maroon;
-    height: 5%; /* Now this will be 5% of the parent's height */
-    width: 100%;
-    display: inline-flex;
-}
-
-.navbar h1 {
-    font-size: large;
-    color: #fff;
-    padding-top: 0.5%;
-    padding-bottom: 1%;
-
-}
-.left-side{
-    background-color: #fff;
-    color: blue;
-    width: 50%;
-    margin-left: 70%;
-    font-size: larger;
-
+:root{
+    --font-family: 'Old newspaper font', sans-serif;
+    --background-color: #f3cea1;
+    --color: #1a1c1a;
 }
