@@ -18,3 +18,11 @@ body {
     padding-bottom: 1%;
 
 }
+.left-side{
+    background-color: #fff;
+    color: blue;
+    width: 50%;
+    margin-left: 70%;
+    font-size: larger;
+
+}
