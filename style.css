@@ -1,14 +1,33 @@
 body {
     font-family: 'Old newspaper font', sans-serif;
+    font-size: x-large;
     background-color: #c99157;
-    color: #ffec9e;
     height: 100vh;
 }
 
+.prevPage {
+    position: absolute;
+    top: 4%;
+    left: 1.5%;
+    z-index: 1000;
+}
+
+.prevPage img {
+    width: 5%;
+    height: auto;
+    min-width: 32px;
+    max-width: 48px;
+    border-radius: 70%;
+    object-fit: cover;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
 .nextPage {
-    position: fixed;
-    top: 0%;
-    right: 1%;
+    position: absolute;
+    top: 3.5%;
+    right: 0;
 }
 
 .nextPage img {
@@ -16,15 +35,15 @@ body {
     height: auto;
     min-width: 32px;
     max-width: 48px;
-    border-radius: 50%;
+    border-radius: 70%;
     object-fit: cover;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .nextPage img:hover {
-    transform: scale(1.1);
+    transform: focus(1.05);
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
@@ -32,26 +51,127 @@ body {
 .btn {
     background-color: #8b5e34;
     border: none;
-    color: #ffec9e;
     margin: 5px;
     transition: all 0.3s ease;
 }
 
 .btn:hover {
     background-color: #6d4a29;
-    color: #fff;
     transform: translateY(-2px);
 }
 
 .form-control {
     background-color: rgba(255, 236, 158, 0.1);
     border: 1px solid #8b5e34;
-    color: #ffec9e;
 }
 
 .form-control:focus {
     background-color: rgba(255, 236, 158, 0.2);
     border-color: #6d4a29;
     box-shadow: 0 0 0 0.25rem rgba(139, 94, 52, 0.25);
-    color: #ffec9e;
+}
+
+/* Card styling for newspaper aesthetic */
+.card {
+    background-color: #f4e4bc;
+    border: 2px solid #8b5e34;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    color: #2c1810;
+}
+
+.card-title {
+    border-bottom: 2px solid #8b5e34;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Badge styling to match theme */
+.badge {
+    font-family: 'Old newspaper font', sans-serif;
+    padding: 8px 12px;
+}
+
+.badge.bg-primary {
+    background-color: #8b5e34 !important;
+}
+
+.badge.bg-success {
+    background-color: #5a7f3c !important;
+}
+
+.badge.bg-danger {
+    background-color: #8b3434 !important;
+}
+
+.badge.bg-info {
+    background-color: #346b8b !important;
+}
+
+/* Rounded profile image border */
+.rounded-circle {
+    border: 3px solid #8b5e34;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-body .prevPage {
+    top: 2%;
+}
+
+/* List group styling */
+.list-group-item {
+    background-color: #f4e4bc;
+    border: 1px solid #8b5e34;
+    margin-bottom: 0.5rem;
+    color: #2c1810;
+}
+
+.list-group-item:hover {
+    background-color: #e8d4a7;
+}
+
+/* Radio button styling */
+.btn-outline-primary {
+    color: #2c1810;
+    border-color: #8b5e34;
+    background-color: #f4e4bc;
+    font-weight: bold;
+}
+
+.btn-outline-primary:hover {
+    background-color: #e8d4a7;
+    border-color: #8b5e34;
+    color: #2c1810;
+}
+
+.btn-check:checked + .btn-outline-primary {
+    background-color: #8b5e34;
+    border-color: #8b5e34;
+    color: #f4e4bc;
+    font-weight: bold;
+}
+
+.btn-check:focus + .btn-outline-primary {
+    box-shadow: 0 0 0 0.25rem rgba(139, 94, 52, 0.25);
+}
+
+.btn-check:active + .btn-outline-primary {
+    background-color: #8b5e34;
+    border-color: #8b5e34;
+    color: #f4e4bc;
+}
+
+/* Form select styling */
+.form-select {
+    background-color: #f4e4bc;
+    border: 1px solid #8b5e34;
+    color: #2c1810;
+}
+
+.form-select:focus {
+    background-color: #e8d4a7;
+    border-color: #8b5e34;
+    box-shadow: 0 0 0 0.25rem rgba(139, 94, 52, 0.25);
 }
