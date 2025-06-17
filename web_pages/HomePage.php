@@ -95,11 +95,11 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-md-2" style="cursor: pointer;">
-                                <img src="../Images/Profile.jpg" alt="Profile" class="rounded-circle img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;" onclick="window.location.href='Profile.html'">
+                                <img src="../Images/Profile.jpg" alt="Profile" class="rounded-circle img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;" onclick="window.location.href='Profile.php'">
                             </div>
                             <div class="col-md-10">
                                 <div class="nextPage">
-                                <img src="../Images/BookCorner.jpg" onclick="window.location.href='Admin.html'" alt="Next Page">
+                                <img src="../Images/BookCorner.jpg" onclick="window.location.href='Admin.php'" alt="Next Page">
                                 </div>
                                 <h2 class="card-title mb-4">Profile Information</h2>
                                 <div class="row">
@@ -172,7 +172,7 @@
                 <div class="card h-100">
                     <div class="card-body text-center">
                         <h3 class="card-title mb-4">Allocate Budget</h3>
-                        <a href="Allocate%20budget.html" class="btn btn-lg btn-primary w-100">Manage Budget</a>
+                        <a href="Allocate%20budget.php" class="btn btn-lg btn-primary w-100">Manage Budget</a>
                     </div>
                 </div>
             </div>
@@ -180,7 +180,7 @@
                 <div class="card h-100">
                     <div class="card-body text-center">
                         <h3 class="card-title mb-4">Transactions</h3>
-                        <a href="Transcation.html" class="btn btn-lg btn-primary w-100">View Transactions</a>
+                        <a href="Transcation.php" class="btn btn-lg btn-primary w-100">View Transactions</a>
                     </div>
                 </div>
             </div>
@@ -188,7 +188,7 @@
                 <div class="card h-100">
                     <div class="card-body text-center">
                         <h3 class="card-title mb-4">Expenses Tracking</h3>
-                        <a href="Expenses.html" class="btn btn-lg btn-primary w-100">Track Expenses</a>
+                        <a href="Expenses.php" class="btn btn-lg btn-primary w-100">Track Expenses</a>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@
             <div class="col-md-8 mx-auto"><div class="card">
                     <div class="card-body">
                         <div class="prevPage">
-                            <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.html'" alt="Previous Page">
+                            <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.php'" alt="Previous Page">
                         </div>
                         <h3 class="card-title text-center mb-4">Budget Allocation</h3>
                         <form>

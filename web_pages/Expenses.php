@@ -27,7 +27,8 @@
         <div class="row mb-4">
             <div class="col-md-6 mx-auto">                <div class="card">
                     <div class="card-body">                        <div class="prevPage">
-                            <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.html'" alt="Previous Page">
+                    <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.php'" alt="Previous Page">
+
                         </div>
                         <h4 class="card-title text-center mb-4">Total Expenses: $1,250</h4>
                         <div class="expense-summary">

@@ -20,7 +20,7 @@
                         <div class="row g-4">
                             <div class="col-md-6">                                <div class="card h-100">
                                     <div class="card-body">                        <div class="prevPage">
-                            <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.html'" alt="Previous Page">
+                            <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.php'" alt="Previous Page">
                         </div>
                         <h5 class="card-title" style="text-align:center;">Account Details</h5>
                         <p class="mb-2">Account Creation:<span class="text-light">2024</span></p>
@@ -48,7 +48,7 @@
                 </div>
                 
                 <div class="text-center">
-                    <button onclick="window.location.href='../index.html'" 
+                    <button onclick="window.location.href='../index.php'" 
                             class="btn btn-danger btn-lg">
                         Logout
                     </button>
