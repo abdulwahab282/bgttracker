@@ -13,7 +13,8 @@
         <div class="card p-4 shadow-lg" style="min-width: 300px;">
             <div class="card-body">
                 <h2 class="text-center mb-4">Budget Tracker Login</h2>
-                <form>
+
+                <form action="login.php"  method="POST">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" required>
@@ -23,14 +24,16 @@
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <div class="d-grid gap-2">
-                        <button type = "button" class="btn btn-primary" onclick = "window.location.href='web_pages/HomePage.html'">Login</button>
+                        <button type ="submit" class="btn btn-primary">Login</button>
                         <button type="reset" class="btn btn-secondary">Reset</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>
