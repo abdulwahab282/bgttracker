@@ -7,89 +7,79 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
-    <?php
-    session_start();
-    function get_creationdate($username): bool|mysqli_result|null {
-        $host = "localhost";
-        $dbname = "budget_tracker";
-        $dbuser = "user";
-        $password = "user";
-        $port = 3000;
-        $conn = new mysqli($host, $dbuser, $password, $dbname, $port);
-        
-        $stmt = $conn->prepare("SELECT creation_date FROM user WHERE username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result;
-        } else {
-            return null;
-        }
-    }
+<?php
 
-    function get_totalcredit($username): bool|mysqli_result|null {
-        $host = "localhost";
-        $dbname = "budget_tracker";
-        $dbuser = "user";
-        $password = "user";
-        $port = 3000;
-        $conn = new mysqli($host, $dbuser, $password, $dbname, $port);
-        
-        $stmt = $conn->prepare("SELECT total_credit FROM user WHERE username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result;
-        } else {
-            return null;
-        }
-    }
- function get_totalspend($username): bool|mysqli_result|null {
-        $host = "localhost";
-        $dbname = "budget_tracker";
-        $dbuser = "user";
-        $password = "user";
-        $port = 3000;
-        $conn = new mysqli($host, $dbuser, $password, $dbname, $port);
-        
-        $stmt = $conn->prepare("SELECT total_spend FROM user WHERE username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result;
-        } else {
-            return null;
-        }
-    }
-    function get_avg($username): bool|mysqli_result|null {
-        $host = "localhost";
-        $dbname = "budget_tracker";
-        $dbuser = "user";
-        $password = "user";
-        $port = 3000;
-        $conn = new mysqli($host, $dbuser, $password, $dbname, $port);
-        
-        $stmt = $conn->prepare("SELECT avg_runningbalance FROM user WHERE username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            return $result;
-        } else {
-            return null;
-        }
-    }
+session_start();
+$host = "localhost";
+$dbname = "budget_tracker";
+$dbuser = "user";
+$password = "user";
+$port = 3000;
+const $conn = new mysqli($host, $dbuser, $password, $dbname, $port); #We will use this conn variable from now on
+if($conn){
+    #Connection successfull
+    print_r("Connected");
+}
+else{
+    #Connection invalid
+    echo "Unable to connect";
+}
 
-    ?>
-    
+function get_creationdate($username): bool|mysqli_result|null {
+    $stmt = $conn->prepare("SELECT creation_date FROM user WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        return $result;
+    } else {
+        return null;
+    }
+    $stmt->close();
+}
+
+function get_totalcredit($username): bool|mysqli_result|null {
+    $stmt = $conn->prepare("SELECT total_credit FROM user WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        return $result;
+    } else {
+        return null;
+    }
+    $stmt->close();
+}
+function get_totalspend($username): bool|mysqli_result|null {        
+    $stmt = $conn->prepare("SELECT total_spend FROM user WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        return $result;
+    } else {
+        return null;
+    }
+    $stmt->close();
+}
+function get_avg($username): bool|mysqli_result|null {
+    $stmt = $conn->prepare("SELECT avg_runningbalance FROM user WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        return $result;
+    } else {
+        return null;
+    }
+    $stmt->close();
+}
+
+?>    
 </head>
 <body>
     <div class="container-fluid py-4" id="homePage">
         <div class="row">
-        
             <div class="col-12 mb-4">
                 <div class="card">
                     <div class="card-body">
@@ -125,14 +115,13 @@
                                     </div>
                                     <div class="col-md-3">
                                         <p class="mb-2">Total Credited: <span class="badge bg-success">
-                                             <?php 
+                                        <?php 
                                         $result = get_totalcredit($_SESSION["username"]);
                                         if ($result) {
                                             $row = $result->fetch_assoc();
                                             echo $row["total_credit"];
                                         } else {
-                                            echo "No user found or error occurred.";}?>
-                                        </span></p>
+                                            echo "No user found or error occurred.";}?></span></p>
                                         <p class="mb-2">Average Balance: <span class="badge bg-info">
                                             <?php 
                                         $result = get_avg($_SESSION["username"]);
@@ -149,7 +138,6 @@
                     </div>
                 </div>
             </div>
-
             
             <div class="col-12 mb-4">
                 <div class="card">
@@ -166,7 +154,6 @@
                     </div>
                 </div>
             </div>
-
             
             <div class="col-md-4">
                 <div class="card h-100">
