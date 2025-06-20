@@ -15,7 +15,7 @@ $dbname = "budget_tracker";
 $dbuser = "user";
 $password = "user";
 $port = 3000;
-const $conn = new mysqli($host, $dbuser, $password, $dbname, $port); #We will use this conn variable from now on
+$conn = new mysqli($host, $dbuser, $password, $dbname, $port); // We will use this conn variable from now on
 if($conn){
     #Connection successfull
     print_r("Connected");
