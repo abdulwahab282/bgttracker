@@ -45,6 +45,17 @@ if($conn){
     $result= $stmt->get_result();
     $row=$result->fetch_assoc();
     $avg_runningbalance= $row["avg_runningbalance"];
+    if (isset($_POST["add_credit"])) {
+    $newAmount = $_POST["credit_amount"];
+    $username = $_SESSION["username"];
+    $sql = "UPDATE user SET Total_credit = Total_credit + ? WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ds", $newAmount, $username);
+    $stmt->execute();
+    header("Location: HomePage.php");
+    exit();
+}
+
 }
 else{
     #Connection invalid
@@ -82,10 +93,15 @@ else{
                                     </div>
                                     <div class="col-md-3">
                                         <p class="mb-2">Total Credited: <span class="badge bg-success">
+                                            </span>
+                                            <form method="POST" class="d-inline">
+                                            <input type="number" name="credit_amount" placeholder="Enter amount" style="width: 120px;" required>
+                                            <button type="submit" name="add_credit" class="btn btn-sm btn-primary">Add</button>
+                                                </form>
                                             <?php
                                             echo"$Total_credit";
                                             ?>
-                                        </p>
+                                                                                    </p>
                                         <p class="mb-2">Average Balance: <span class="badge bg-info">
                                             <?php
                                             echo "$avg_runningbalance";
