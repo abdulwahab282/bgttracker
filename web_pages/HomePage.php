@@ -18,14 +18,42 @@ $port = 3000;
 $conn = new mysqli($host, $dbuser, $password, $dbname, $port); // We will use this conn variable from now on
 if($conn){
     #Connection successfull
-    print_r("Connected");
+    // print_r("Connected");
+    $username=$_SESSION["username"];
+    $sql="SELECT creation_date from user where username = ?";
+    $stmt= $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result= $stmt->get_result();
+    $row=$result->fetch_assoc();
+    $account_creation= $row["creation_date"];
 
+     $username=$_SESSION["username"];
+    $sql="SELECT Total_credit from user where username = ?";
+    $stmt= $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result= $stmt->get_result();
+    $row=$result->fetch_assoc();
+    $Total_credit= $row["Total_credit"];
+
+    $username=$_SESSION["username"];
+    $sql="SELECT avg_runningbalance from user where username = ?";
+    $stmt= $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result= $stmt->get_result();
+    $row=$result->fetch_assoc();
+    $avg_runningbalance= $row["avg_runningbalance"];
 }
 else{
     #Connection invalid
     echo "Unable to connect";
     die();
 }
+
+
+
 
 ?>    
 </head>
@@ -47,42 +75,22 @@ else{
                                 <div class="row">
                                     <div class="col-md-3">
                                         <p class="mb-2">Account Creation: <span class="badge bg-secondary">
-                                        <?php 
-                                        $result = get_creationdate($_SESSION["username"]);
-                                        if ($result) {
-                                            $row = $result->fetch_assoc();
-                                            echo $row["creation_date"];
-                                        } else {
-                                            echo "No user found or error occurred.";}?></span></p>
-                                        <p class="mb-2">Total Amount Spent: <span class="badge bg-danger">
-                                            <?php 
-                                        $result = get_totalspend($_SESSION["username"]);
-                                        if ($result) {
-                                            $row = $result->fetch_assoc();
-                                            echo $row["total_spend"];
-                                        } else {
-                                            echo "No user found or error occurred.";}?>
-                                        </span></p>
+                                        <?php
+                                        echo "$account_creation";
+                                        ?>
                                         </span></p>
                                     </div>
                                     <div class="col-md-3">
                                         <p class="mb-2">Total Credited: <span class="badge bg-success">
-                                        <?php 
-                                        $result = get_totalcredit($_SESSION["username"]);
-                                        if ($result) {
-                                            $row = $result->fetch_assoc();
-                                            echo $row["total_credit"];
-                                        } else {
-                                            echo "No user found or error occurred.";}?></span></p>
+                                            <?php
+                                            echo"$Total_credit";
+                                            ?>
+                                        </p>
                                         <p class="mb-2">Average Balance: <span class="badge bg-info">
-                                            <?php 
-                                        $result = get_avg($_SESSION["username"]);
-                                        if ($result) {
-                                            $row = $result->fetch_assoc();
-                                            echo $row["avg_runningbalance"];
-                                        } else {
-                                            echo "No user found or error occurred.";}?>
-                                        </span></p>
+                                            <?php
+                                            echo "$avg_runningbalance";
+                                            ?>
+                                            </p>
                                     </div>
                                 </div>
                             </div>

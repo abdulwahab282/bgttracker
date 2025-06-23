@@ -21,17 +21,18 @@
     $username = $_POST["username"];
     $pass = $_POST["password"];
 
-    $sql = "INSERT INTO user (username, password) VALUES (?, ?, 0, 0, 0, 0, 0)";
+    $sql = "INSERT INTO user VALUES (?, ?, ?, 0, 0, 0, 0)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $username, $pass);
+    $currenttime=date("Y-m-d");
+    $stmt->bind_param("sss", $username, $pass, $currenttime);
     if($stmt->execute()){
-    <script>window.alert("Sign up Successful!");</script>
+    echo "<script>window.alert('Sign up Successful!');</script>";
     $stmt->close();
     $conn->close();
     header("Location: index.php");
     }
     else{
-        echo "Error: ".%stmt->error;
+        echo '"Error: ". $stmt->error';
     }
 ?>
     
