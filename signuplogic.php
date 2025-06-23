@@ -18,30 +18,20 @@
         die("Unexpected error: " . $conn->connect_error);
     }
     
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["username"], $_POST["password"], $_POST["confirm_password"])) {
-        $username = $_POST["username"];
-        $pass = $_POST["password"];
-        $confirm_pass = $_POST["confirm_password"];
-    
-        $sql = "INSERT INTO user (username, password) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        if ($stmt) {
-            $stmt->bind_param("ss", $username, $pass);
-            if ($stmt->execute()) {
-                session_start();
-                $_SESSION["username"] = $username;
-                $_SESSION["password"] = $pass;
-                header("Location: index.php");
-                exit();
-            } else {
-                echo "Error inserting data: " . $stmt->error;
-            }
-            $stmt->close();
-        } else {
-            echo "Prepare failed: " . $conn->error;
-        }
-    }
+    $username = $_POST["username"];
+    $pass = $_POST["password"];
 
+    $sql = "INSERT INTO user (username, password) VALUES (?, ?, 0, 0, 0, 0, 0)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $username, $pass);
+    if($stmt->execute()){
+    <script>window.alert("Sign up Successful!");</script>
+    $stmt->close();
     $conn->close();
-    ?>
+    header("Location: index.php");
+    }
+    else{
+        echo "Error: ".%stmt->error;
+    }
+?>
     

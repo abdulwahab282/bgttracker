@@ -19,60 +19,12 @@ $conn = new mysqli($host, $dbuser, $password, $dbname, $port); // We will use th
 if($conn){
     #Connection successfull
     print_r("Connected");
+
 }
 else{
     #Connection invalid
     echo "Unable to connect";
-}
-
-function get_creationdate($username): bool|mysqli_result|null {
-    $stmt = $conn->prepare("SELECT creation_date FROM user WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        return $result;
-    } else {
-        return null;
-    }
-    $stmt->close();
-}
-
-function get_totalcredit($username): bool|mysqli_result|null {
-    $stmt = $conn->prepare("SELECT total_credit FROM user WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        return $result;
-    } else {
-        return null;
-    }
-    $stmt->close();
-}
-function get_totalspend($username): bool|mysqli_result|null {        
-    $stmt = $conn->prepare("SELECT total_spend FROM user WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        return $result;
-    } else {
-        return null;
-    }
-    $stmt->close();
-}
-function get_avg($username): bool|mysqli_result|null {
-    $stmt = $conn->prepare("SELECT avg_runningbalance FROM user WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        return $result;
-    } else {
-        return null;
-    }
-    $stmt->close();
+    die();
 }
 
 ?>    
