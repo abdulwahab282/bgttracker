@@ -79,4 +79,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+</html><?php
+require 'DB_Connect.php';
+$users = [];
+$sql = "SELECT username, creation_date FROM user";
+$result = $conn->query($sql);
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+}
+?>

@@ -6,22 +6,13 @@
     <title>Sign-up</title>
 </head>
 <?php
-    $host = "localhost";
-    $dbname = "budget_tracker";
-    $user = "user";
-    $password = "user";
-    $port = 3000; // Change to your actual port
     
-    $conn = new mysqli($host, $user, $password, $dbname, $port);
-    
-    if ($conn->connect_error) {
-        die("Unexpected error: " . $conn->connect_error);
-    }
-    
+    require 'DB_Connect.php';
     $username = $_POST["username"];
     $pass = $_POST["password"];
 
     $sql = "INSERT INTO user VALUES (?, ?, ?, 0, 0, 0, 0)";
+
     $stmt = $conn->prepare($sql);
     $currenttime=date("Y-m-d");
     $stmt->bind_param("sss", $username, $pass, $currenttime);

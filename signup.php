@@ -14,7 +14,7 @@
             <div class="card-body">
                 <h2 class="text-center mb-4">Budget Tracker Sign up</h2>
 
-                <form action="signuplogic.php" method="POST">
+                <form action="signuplogic.php" method="POST" onsubmit="MatchPattern(document.getElementById('p1').value, document.getElementById('p2').value, event)">
                     
                     <div class="mb-3">
                         <label for="username" class="form-label">Enter your name</label>
@@ -29,7 +29,7 @@
                         <input type="password" class="form-control" id="p2" name="confirm_password" required>
                     </div>
                     <div class="mb-3">
-                        <button type="submit" class="btn btn-primary" onclick="MatchPattern(document.getElementById('p1').value, document.getElementById('p2').value, document.getElementById('username').value)">Sign up</button>
+                        <button type="submit" class="btn btn-primary">Sign up</button>
                         <button style="color:white" onclick="window.location.href='index.php'" class="btn btn-link" > Go back to Login</a> 
 
                     </div>
@@ -40,6 +40,34 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="Utils.js"></script>
+    <script>
+    function CheckPassword(password) {
+    let specialcharacters = ['!','@','#','$','%','^','&','*','(',')','_','-','+','='];
+    for (let i = 0; i < specialcharacters.length; i++) {
+        if (password.includes(specialcharacters[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function MatchPattern(p1, p2, event) {
+    if (p1 == p2) {
+        let passwordvalid = CheckPassword(p1);
+        if (!passwordvalid) {
+            event.preventDefault();
+            alert("Password invalid, please include at least one special character!");
+            return false;
+        }
+    } 
+    else {
+        event.preventDefault();
+        alert("Passwords do not match! Please try again");
+        return false;
+    }
+    alert("Signup Successful, redirecting to Login Page...")
+    return true;
+}
+    </script>
 </body>
 </html>

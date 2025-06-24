@@ -1,3 +1,41 @@
+<?php
+require 'DB_Connect.php';
+session_start();
+$username = $_SESSION["username"];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_expense"])) {
+    $amount = $_POST["expense_amount"];
+    $category = $_POST["category"];
+    // Subtract from Total_credit
+    $sql = "UPDATE user SET Total_credit = Total_credit - ? WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ds", $amount, $username);
+    $stmt->execute();
+    // Insert into transcation
+    $sql = "INSERT INTO transcation(username, Transcation_id, total_amount, Category) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $tId = time();
+    $stmt->bind_param("sids", $username, $tId, $amount, $category);
+    $stmt->execute();
+    $stmt->close();
+}
+
+// Fetch category totals from transcation table
+$categories = ['Transport', 'Education', 'Health', 'Shopping', 'Food'];
+$category_totals = [];
+foreach ($categories as $cat) {
+    $sql = "SELECT SUM(total_amount) as total FROM transcation WHERE username = ? AND Category = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $username, $cat);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $category_totals[$cat] = $row['total'] ? floatval($row['total']) : 0;
+    $stmt->close();
+}
+$total_expenses = array_sum($category_totals);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,16 +68,16 @@
                     <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.php'" alt="Previous Page">
 
                         </div>
-                        <h4 class="card-title text-center mb-4">Total Expenses: $1,250</h4>
+                        <h4 class="card-title text-center mb-4">Total Expenses: RS <?php echo number_format($total_expenses, 2); ?></h4>
                         <div class="expense-summary">
                             <!-- Transport -->
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>Transport</span>
-                                    <span>$250 (20%)</span>
+                                    <span>RS <?php echo number_format($category_totals['Transport'], 2); ?> (<?php echo $total_expenses > 0 ? round($category_totals['Transport']/$total_expenses*100) : 0; ?>%)</span>
                                 </div>
                                 <div class="progress bg-light">
-                                    <div class="progress-bar" style="width: 20%; background-color: #8b5e34;"></div>
+                                    <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Transport']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
                             </div>
 
@@ -47,10 +85,10 @@
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>Education</span>
-                                    <span>$375 (30%)</span>
+                                    <span>RS <?php echo number_format($category_totals['Education'], 2); ?> (<?php echo $total_expenses > 0 ? round($category_totals['Education']/$total_expenses*100) : 0; ?>%)</span>
                                 </div>
                                 <div class="progress bg-light">
-                                    <div class="progress-bar" style="width: 30%; background-color: #8b5e34;"></div>
+                                    <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Education']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
                             </div>
 
@@ -58,10 +96,10 @@
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>Health</span>
-                                    <span>$187.50 (15%)</span>
+                                    <span>RS <?php echo number_format($category_totals['Health'], 2); ?> (<?php echo $total_expenses > 0 ? round($category_totals['Health']/$total_expenses*100) : 0; ?>%)</span>
                                 </div>
                                 <div class="progress bg-light">
-                                    <div class="progress-bar" style="width: 15%; background-color: #8b5e34;"></div>
+                                    <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Health']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
                             </div>
 
@@ -69,10 +107,10 @@
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>Shopping</span>
-                                    <span>$250 (20%)</span>
+                                    <span>RS <?php echo number_format($category_totals['Shopping'], 2); ?> (<?php echo $total_expenses > 0 ? round($category_totals['Shopping']/$total_expenses*100) : 0; ?>%)</span>
                                 </div>
                                 <div class="progress bg-light">
-                                    <div class="progress-bar" style="width: 20%; background-color: #8b5e34;"></div>
+                                    <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Shopping']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
                             </div>
 
@@ -80,10 +118,10 @@
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
                                     <span>Food</span>
-                                    <span>$187.50 (15%)</span>
+                                    <span>RS <?php echo number_format($category_totals['Food'], 2); ?> (<?php echo $total_expenses > 0 ? round($category_totals['Food']/$total_expenses*100) : 0; ?>%)</span>
                                 </div>
                                 <div class="progress bg-light">
-                                    <div class="progress-bar" style="width: 15%; background-color: #8b5e34;"></div>
+                                    <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Food']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
                             </div>
                         </div>
@@ -96,49 +134,54 @@
             <div class="col-lg-8 mx-auto">
                 <div class="list-group">
                     <!-- Transport -->
-                    <div class="list-group-item bg-transparent border-light mb-3">
+                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
                         <h5 class="mb-3">Transport</h5>
                         <div class="input-group">
-                            <input type="number" class="form-control" placeholder="Enter amount">
-                            <button class="btn btn-primary">Add</button>
+                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                            <input type="hidden" name="category" value="Transport">
+                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
                         </div>
-                    </div>
+                    </form>
 
                     <!-- Education -->
-                    <div class="list-group-item bg-transparent border-light mb-3">
+                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
                         <h5 class="mb-3">Education</h5>
                         <div class="input-group">
-                            <input type="number" class="form-control" placeholder="Enter amount">
-                            <button class="btn btn-primary">Add</button>
+                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                            <input type="hidden" name="category" value="Education">
+                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
                         </div>
-                    </div>
+                    </form>
 
                     <!-- Health -->
-                    <div class="list-group-item bg-transparent border-light mb-3">
+                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
                         <h5 class="mb-3">Health</h5>
                         <div class="input-group">
-                            <input type="number" class="form-control" placeholder="Enter amount">
-                            <button class="btn btn-primary">Add</button>
+                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                            <input type="hidden" name="category" value="Health">
+                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
                         </div>
-                    </div>
+                    </form>
 
                     <!-- Shopping -->
-                    <div class="list-group-item bg-transparent border-light mb-3">
+                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
                         <h5 class="mb-3">Shopping</h5>
                         <div class="input-group">
-                            <input type="number" class="form-control" placeholder="Enter amount">
-                            <button class="btn btn-primary">Add</button>
+                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                            <input type="hidden" name="category" value="Shopping">
+                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
                         </div>
-                    </div>
+                    </form>
 
                     <!-- Food -->
-                    <div class="list-group-item bg-transparent border-light mb-3">
+                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
                         <h5 class="mb-3">Food</h5>
                         <div class="input-group">
-                            <input type="number" class="form-control" placeholder="Enter amount">
-                            <button class="btn btn-primary">Add</button>
+                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                            <input type="hidden" name="category" value="Food">
+                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

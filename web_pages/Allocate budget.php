@@ -7,6 +7,40 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
+
+    <?php
+require 'DB_connect.php';
+session_start();
+$username = $_SESSION['username'];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["save_budget"])) {
+    $yearly = $_POST['yearly_budget'];
+    $monthly = $_POST['monthly_budget'];
+    $weekly = $_POST['weekly_budget'];
+
+    // Check if budget already exists for this user
+    $check = $conn->prepare("SELECT * FROM budget WHERE username = ?");
+    $check->bind_param("s", $username);
+    $check->execute();
+    $result = $check->get_result();
+
+    if ($result->num_rows > 0) {
+        // Update existing record
+        $sql = "UPDATE budget SET yearly = ?, monthly = ?, weekly = ? WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ddds", $yearly, $monthly, $weekly, $username);
+    } else {
+        // Insert new record
+        $sql = "INSERT INTO budget (username, yearly, monthly, weekly) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sddd", $username, $yearly, $monthly, $weekly);
+    }
+
+    $stmt->execute();
+    $stmt->close();
+}
+?>
+
 </head>
 <body>
     <div class="container py-4">

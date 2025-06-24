@@ -10,12 +10,8 @@
 <?php
 
 session_start();
-$host = "localhost";
-$dbname = "budget_tracker";
-$dbuser = "user";
-$password = "user";
-$port = 3000;
-$conn = new mysqli($host, $dbuser, $password, $dbname, $port); // We will use this conn variable from now on
+require 'DB_Connect.php';
+
 if($conn){
     #Connection successfull
     // print_r("Connected");
@@ -28,7 +24,7 @@ if($conn){
     $row=$result->fetch_assoc();
     $account_creation= $row["creation_date"];
 
-     $username=$_SESSION["username"];
+    $username=$_SESSION["username"];
     $sql="SELECT Total_credit from user where username = ?";
     $stmt= $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -45,6 +41,7 @@ if($conn){
     $result= $stmt->get_result();
     $row=$result->fetch_assoc();
     $avg_runningbalance= $row["avg_runningbalance"];
+
     if (isset($_POST["add_credit"])) {
     $newAmount = $_POST["credit_amount"];
     $username = $_SESSION["username"];
@@ -62,10 +59,15 @@ else{
     echo "Unable to connect";
     die();
 }
+$saving_amount;
 
-
-
-
+$sql="SELECT savings from user where username = ?";
+    $stmt= $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result= $stmt->get_result();
+    $row=$result->fetch_assoc();
+    $saving_amount= $row["savings"];
 ?>    
 </head>
 <body>
@@ -82,7 +84,7 @@ else{
                                 <div class="nextPage">
                                 <img src="../Images/BookCorner.jpg" onclick="window.location.href='Admin.php'" alt="Next Page">
                                 </div>
-                                <h2 class="card-title mb-4">Profile Information</h2>
+                                <h2 class="card-title mb-4">Profile Information - <?php echo"$username" ?></h2>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <p class="mb-2">Account Creation: <span class="badge bg-secondary">
@@ -92,16 +94,12 @@ else{
                                         </span></p>
                                     </div>
                                     <div class="col-md-3">
-                                        <p class="mb-2">Total Credited: <span class="badge bg-success">
-                                            </span>
-                                            <form method="POST" class="d-inline">
-                                            <input type="number" name="credit_amount" placeholder="Enter amount" style="width: 120px;" required>
-                                            <button type="submit" name="add_credit" class="btn btn-sm btn-primary">Add</button>
-                                                </form>
+                                        <p class="mb-2">Total Balance: <span class="badge bg-success">
                                             <?php
-                                            echo"$Total_credit";
+                                            echo "$Total_credit";
                                             ?>
-                                                                                    </p>
+                                            </span>
+                                        </p>
                                         <p class="mb-2">Average Balance: <span class="badge bg-info">
                                             <?php
                                             echo "$avg_runningbalance";
@@ -124,7 +122,7 @@ else{
                                 <h3>Running Budget: <span class="badge bg-primary">$2000</span></h3>
                             </div>
                             <div class="col-md-6">
-                                <h3>Current Savings: <span class="badge bg-success">$1000</span></h3>
+                                <h3>Current Savings: <span class="badge bg-success"><?php echo "$saving_amount"; ?></span></h3>
                             </div>
                         </div>
                     </div>
