@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
 </head>
+<?php
+    require_once(__DIR__ . '/DBFunctions/HomePage_vars.php');
+?>
 <body>
     <div class="container py-4">        <div class="card">
             <div class="card-body">
@@ -23,7 +26,7 @@
                             <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.php'" alt="Previous Page">
                         </div>
                         <h5 class="card-title" style="text-align:center;">Account Details</h5>
-                        <p class="mb-2">Account Creation:<span class="text-light">2024</span></p>
+                        <p class="mb-2">Account Creation: <span class="text-dark"><?php echo $account_creation?></span></p>
                                         <p class="mb-2">Highest Running Balance: <span class="badge bg-success">$7,500</span></p>
                                     </div>
                                 </div>
