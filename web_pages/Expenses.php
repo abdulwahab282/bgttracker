@@ -1,5 +1,5 @@
 <?php
-require 'DB_Connect.php';
+require '../DB_Connect.php';
 session_start();
 $username = $_SESSION["username"];
 
@@ -22,7 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_expense"])) {
 
 // Fetch category totals from transcation table
 $categories = ['Transport', 'Education', 'Health', 'Shopping', 'Food'];
+//Todo, make the above array dynamic where new categories can be added by the user.
 $category_totals = [];
+
 foreach ($categories as $cat) {
     $sql = "SELECT SUM(total_amount) as total FROM transcation WHERE username = ? AND Category = ?";
     $stmt = $conn->prepare($sql);
@@ -34,6 +36,7 @@ foreach ($categories as $cat) {
     $stmt->close();
 }
 $total_expenses = array_sum($category_totals);
+
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +56,7 @@ $total_expenses = array_sum($category_totals);
         <div class="row mb-4">
             <div class="col-md-6 mx-auto">
                 <select class="form-select">
-                    <option selected>Select Period</option>
+                    <option selected>Select Period</option> <!--Todo, make this period setting work -->
                     <option value="yearly">Yearly</option>
                     <option value="monthly">Monthly</option>
                     <option value="weekly">Weekly</option>

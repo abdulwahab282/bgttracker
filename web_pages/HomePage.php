@@ -8,69 +8,8 @@
     <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
 <?php
-
-session_start();
-require 'DB_Connect.php';
-
-if($conn){
-    #Connection successfull
-    // print_r("Connected");
-    $username=$_SESSION["username"];
-    $sql="SELECT creation_date from user where username = ?";
-    $stmt= $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result= $stmt->get_result();
-    $row=$result->fetch_assoc();
-    $account_creation= $row["creation_date"];
-
-    $username=$_SESSION["username"];
-    $sql="SELECT Total_credit from user where username = ?";
-    $stmt= $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result= $stmt->get_result();
-    $row=$result->fetch_assoc();
-    $Total_credit= $row["Total_credit"];
-
-    $username=$_SESSION["username"];
-    $sql="SELECT avg_runningbalance from user where username = ?";
-    $stmt= $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result= $stmt->get_result();
-    $row=$result->fetch_assoc();
-    $avg_runningbalance= $row["avg_runningbalance"];
-
-    if (isset($_POST["add_credit"])) {
-    $newAmount = $_POST["credit_amount"];
-    $username = $_SESSION["username"];
-    $sql = "UPDATE user SET Total_credit = Total_credit + ? WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ds", $newAmount, $username);
-    $stmt->execute();
-    header("Location: HomePage.php");
-    exit();
-}
-
-}
-else{
-    #Connection invalid
-    echo "Unable to connect";
-    die();
-}
-$saving_amount;
-
-$sql="SELECT savings from user where username = ?";
-    $stmt= $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result= $stmt->get_result();
-    $row=$result->fetch_assoc();
-    $saving_amount= $row["savings"];
-?>    
-</head>
-<body>
+    require_once('DBFunctions/HomePage_vars.php');
+?>
     <div class="container-fluid py-4" id="homePage">
         <div class="row">
             <div class="col-12 mb-4">

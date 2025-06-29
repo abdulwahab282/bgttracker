@@ -8,13 +8,35 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
 </head>
+<?php
+    require 'DB_Connect.php';
+    if (isset($_POST["username"]) && isset($_POST["password"])) {
+        $username = $_POST["username"];
+        $pass = $_POST["password"];
+
+        $sql = "INSERT INTO user VALUES (?, ?, ?, 0, 0, 0, 0, 0)";
+
+        $stmt = $conn->prepare($sql);
+        $currenttime = date("Y-m-d");
+        $stmt->bind_param("sss", $username, $pass, $currenttime);
+        if ($stmt->execute()) {
+            echo "<script>window.alert('Sign up Successful!');</script>";
+            $stmt->close();
+            $conn->close();
+            header("Location: index.php");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+    }
+?>
 <body>
     <div class="container min-vh-100 d-flex align-items-center justify-content-center">
         <div class="card p-4 shadow-lg" style="min-width: 300px;">
             <div class="card-body">
                 <h2 class="text-center mb-4">Budget Tracker Sign up</h2>
 
-                <form action="signuplogic.php" method="POST" onsubmit="MatchPattern(document.getElementById('p1').value, document.getElementById('p2').value, event)">
+                <form action="" method="POST" onsubmit="MatchPattern(document.getElementById('p1').value, document.getElementById('p2').value, event)">
                     
                     <div class="mb-3">
                         <label for="username" class="form-label">Enter your name</label>
@@ -40,7 +62,9 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+
+<script>
+
     function CheckPassword(password) {
     let specialcharacters = ['!','@','#','$','%','^','&','*','(',')','_','-','+','='];
     for (let i = 0; i < specialcharacters.length; i++) {
@@ -49,25 +73,27 @@
         }
     }
     return false;
-}
+    }
 
-function MatchPattern(p1, p2, event) {
-    if (p1 == p2) {
-        let passwordvalid = CheckPassword(p1);
-        if (!passwordvalid) {
+    function MatchPattern(p1, p2, event) {
+        if (p1 == p2) {
+            let passwordvalid = CheckPassword(p1);
+            if (!passwordvalid) {
+                event.preventDefault();
+                alert("Password invalid, please include at least one special character!");
+                return false;
+            }
+        } 
+        else {
             event.preventDefault();
-            alert("Password invalid, please include at least one special character!");
+            alert("Passwords do not match! Please try again");
             return false;
         }
-    } 
-    else {
-        event.preventDefault();
-        alert("Passwords do not match! Please try again");
-        return false;
+        alert("Signup Successful, redirecting to Login Page...")
+        return true;
     }
-    alert("Signup Successful, redirecting to Login Page...")
-    return true;
-}
-    </script>
+
+</script>
+
 </body>
 </html>

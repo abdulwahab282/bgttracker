@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
 
-    <?php
+<?php
 require 'DB_connect.php';
 session_start();
 $username = $_SESSION['username'];
