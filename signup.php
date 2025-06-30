@@ -20,6 +20,10 @@
         $currenttime = date("Y-m-d");
         $stmt->bind_param("sss", $username, $pass, $currenttime);
         if ($stmt->execute()) {
+            $sql = "INSERT INTO budget values(?,0,0,0)";
+            $stmt = $conn -> prepare($sql);
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
             echo "<script>window.alert('Sign up Successful!');</script>";
             $stmt->close();
             $conn->close();

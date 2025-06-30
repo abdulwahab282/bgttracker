@@ -58,7 +58,16 @@
                         <h2 class="card-title mb-4">Budget Overview</h2>
                         <div class="row">
                             <div class="col-md-6">
-                                <h3>Running Budget: <span class="badge bg-primary">$2000</span></h3>
+                            <form method="post" action="">
+    <h3>Running Budget: 
+        <span class="badge bg-primary"></span>
+        <select name="budget_time" onchange="this.form.submit()">
+            <option value="monthly_budget" <?php if(isset($_POST['budget_time']) && $_POST['budget_time']=='monthly_budget') echo 'showbudget("monthly_budget")'; ?>>Monthly</option>
+            <option value="weekly_budget" <?php if(isset($_POST['budget_time']) && $_POST['budget_time']=='weekly_budget') echo ''; ?>>Weekly</option>
+            <option value="yearly_budget" <?php if(isset($_POST['budget_time']) && $_POST['budget_time']=='yearly_budget') echo ''; ?>>Yearly</option>
+        </select>
+    </h3>
+</form>
                             </div>
                             <div class="col-md-6">
                                 <h3>Current Savings: <span class="badge bg-success"><?php echo "$saving_amount"; ?></span></h3>
@@ -72,7 +81,7 @@
                 <div class="card h-100">
                     <div class="card-body text-center">
                         <h3 class="card-title mb-4">Allocate Budget</h3>
-                        <a href="Allocate%20budget.php" class="btn btn-lg btn-primary w-100">Manage Budget</a>
+                        <a href="Allocatebudget.php" class="btn btn-lg btn-primary w-100">Manage Budget</a>
                     </div>
                 </div>
             </div>
