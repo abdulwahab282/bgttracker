@@ -125,6 +125,7 @@ if(isset($_POST["saving"])){
         }
 
         function Autofill(y,m,w){
+           
             console.log(y);
             
         if(y==""&& w==""&& m=="")
