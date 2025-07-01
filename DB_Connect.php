@@ -4,7 +4,7 @@
     $dbname = "budget_tracker";
     $user = "user";
     $password = "user";
-    $port = 3306; // Change to your actual port
+    $port = 3000; // Change to your actual port
     
     $conn = new mysqli($host, $user, $password, $dbname, $port);
     

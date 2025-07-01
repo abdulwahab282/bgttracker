@@ -57,7 +57,7 @@ if(isset($_POST["saving"])){
                             <div class="mb-4">
                                 <label for="budget" class="form-label">Allocate yearly budget</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" id="budget" name="yearly_budget" required>
+                                    <input type="number" class="form-control" id="yearly_budget" name="yearly_budget" required>
                                 </div>
                             </div>
 
@@ -75,7 +75,7 @@ if(isset($_POST["saving"])){
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="weekly_budget" name="weekly_budget" required>
                                 </div>
-                                <button type="button" class="btn btn-primary" name="autoallocate" onclick="Autofill(document.getElementByName('yearly_budget').value,document.getElementByName('monthly_budget').value, document.getElementByName('weekly_budget').value);">AutoFill values</button>
+                                <button type="button" class="btn btn-primary" name="autoallocate" onclick="Autofill(document.getElementById('yearly_budget').value,document.getElementById('monthly_budget').value, document.getElementById('weekly_budget').value);">AutoFill values</button>
 
                                 <button type="submit" class="btn btn-primary" name="save_budget" style="margin-left:74.5%;" onclick="">Submit</button>
                             </div>
@@ -123,6 +123,61 @@ if(isset($_POST["saving"])){
                 return false;
             }
         }
+
+        function Autofill(y,m,w){
+            console.log(y);
+            
+        if(y==""&& w==""&& m=="")
+        {
+             window.alert("Please Allocate Budget to Atleast one field");
+        }
+        else
+        {
+            if(y=="")
+        {
+            if(m!=""){
+                y=m*12;
+                document.getElementById("yearly_budget").value=y;
+            }
+            else{
+                y=w*52;
+                document.getElementById("yearly_budget").value=y;
+            }
+        }
+        else if(m==""){
+            if(w!=="")
+        {
+            m=w*4;
+            document.getElementById("monthly_budget").value=m;
+        }
+        else{
+            m=y/12;
+            document.getElementById("monthly_budget").value=m;
+
+        }
+
+        }
+        else if(w==""){
+            
+            if(y!="")
+        {
+            w=y/52;
+            document.getElementById("weekly_budget").value=w;
+
+        }
+        else
+            {
+                w=m/4;
+            document.getElementById("weekly_budget").value=w;
+
+            }
+        }
+        
+
+        }
+
+    }
+
     </script>
 
 </body>

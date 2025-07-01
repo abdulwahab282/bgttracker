@@ -63,8 +63,8 @@
         <span class="badge bg-primary"></span>
         <select name="budget_time" onchange="this.form.submit()">
             <option value="monthly_budget" <?php if(isset($_POST['budget_time']) && $_POST['budget_time']=='monthly_budget') echo 'showbudget("monthly_budget")'; ?>>Monthly</option>
-            <option value="weekly_budget" <?php if(isset($_POST['budget_time']) && $_POST['budget_time']=='weekly_budget') echo ''; ?>>Weekly</option>
-            <option value="yearly_budget" <?php if(isset($_POST['budget_time']) && $_POST['budget_time']=='yearly_budget') echo ''; ?>>Yearly</option>
+            <option value="weekly_budget" <?php if(isset($_POST['budget_time']) && $_POST['budget_time']=='weekly_budget') echo 'showbudget("Weekly_budget")'; ?>>Weekly</option>
+            <option value="yearly_budget" <?php if(isset($_POST['budget_time']) && $_POST['budget_time']=='yearly_budget') echo 'showbudget("Yearly_budget")'; ?>>Yearly</option>
         </select>
     </h3>
 </form>
