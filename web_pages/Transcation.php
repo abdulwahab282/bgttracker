@@ -52,7 +52,7 @@
                                 <input type="number" class="form-control" name="credit_amount" id="amount" required>
                                 <label class="form-label" required>Category:</label>
                                 <input type="text" class="form-control" name="credit_category">
-                                <button type="submit" class="btn btn-danger w-100" name="add_credit">Credit</button>
+                                <button type="submit" class="btn btn-danger w-100" name="add_credit" style="background-color: darkgreen";>Credit</button>
                             </div>
                             </form>
                             <form method="POST" action="">
@@ -62,7 +62,7 @@
                                 <label class="form-label" required>Category:</label>
                                 <input type="text" class="form-control" name="debit_category" required>
                             </div>
-                            <button type="submit" class="btn btn-danger w-100" name="add_debit">Debit</button>
+                                <button type="submit" class="btn btn-danger w-100" style="background-color: firebrick;";;" name="add_debit">Debit</button>
                             </form>
 
                     </div>

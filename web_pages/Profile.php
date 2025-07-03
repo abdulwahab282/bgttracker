@@ -9,43 +9,7 @@
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
 </head>
 <?php
-    require_once(__DIR__ . '/DBFunctions/HomePage_vars.php');
-    $sql="SELECT SUM(total_amount) FROM transcation WHERE username=? and Type='Debit'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result ->fetch_assoc();
-    $stmt->close();   
-
-    $total_spend = $row['SUM(total_amount)'];
-    
-    $sql="SELECT SUM(total_amount) FROM transcation where username=? and type='Credit'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result -> fetch_assoc();
-    $stmt->close();
-    $total_Credit= $row['SUM(total_amount)'];
-
-     $sql="SELECT AVG(total_amount) FROM transcation where username=? and  type='Credit'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result -> fetch_assoc();
-    $stmt->close();
-    $avg_total= $row['AVG(total_amount)'];
-
-    $sql="SELECT AVG(total_amount) FROM transcation where username=? and  type='Debit'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result -> fetch_assoc();
-    $stmt->close();
-    $avg_Debit= $row['AVG(total_amount)'];
+    include 'DBFunctions/Variables.php';
 ?>
 <body>
     <div class="container py-4">        <div class="card">
@@ -54,6 +18,12 @@
                     <div class="col-md-3 text-center">
                         <img src="../Images/Profile.jpg" alt="Profile" class="rounded-circle img-fluid mb-3" 
                              style="width: 200px; height: 200px; object-fit: cover;">
+                             <div class="text-center">
+                    <button onclick="window.location.href='../index.php' <?php session_destroy(); ?>"  
+                            class="btn btn-danger btn-lg">
+                        Logout
+                    </button>
+                </div>
                     </div>
                     <div class="col-md-9">
                         <div class="row g-4">
@@ -84,13 +54,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="text-center">
-                    <button onclick="window.location.href='../index.php'" 
-                            class="btn btn-danger btn-lg">
-                        Logout
-                    </button>
                 </div>
             </div>
         </div>

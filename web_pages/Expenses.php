@@ -1,42 +1,6 @@
 <?php
-require '../DB_Connect.php';
-session_start();
-$username = $_SESSION["username"];
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_expense"])) {
-    $amount = $_POST["expense_amount"];
-    $category = $_POST["category"];
-    // Subtract from Total_credit
-    $sql = "UPDATE user SET Total_credit = Total_credit - ? WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ds", $amount, $username);
-    $stmt->execute();
-    // Insert into transcation
-    $sql = "INSERT INTO transcation(username, Transcation_id, total_amount, Category) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $tId = time();
-    $stmt->bind_param("sids", $username, $tId, $amount, $category);
-    $stmt->execute();
-    $stmt->close();
-}
-
-// Fetch category totals from transcation table
-$categories = ['Transport', 'Education', 'Health', 'Shopping', 'Food'];
-//Todo, make the above array dynamic where new categories can be added by the user.
-$category_totals = [];
-
-foreach ($categories as $cat) {
-    $sql = "SELECT SUM(total_amount) as total FROM transcation WHERE username = ? AND Category = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $username, $cat);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $category_totals[$cat] = $row['total'] ? floatval($row['total']) : 0;
-    $stmt->close();
-}
-$total_expenses = array_sum($category_totals);
-
+include '../DB_Connect.php';
+include 'DBFunctions/Variables.php';
 ?>
 
 <!DOCTYPE html>

@@ -1,3 +1,5 @@
+<!-- TO DO: ADD SAVINGS DELETION BUTTON -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +11,8 @@
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
 
 <?php
-require_once(__DIR__ . '/../DB_connect.php');
-require_once(__DIR__ . '/DBFunctions/HomePage_vars.php');
+include '../DB_connect.php';
+include 'DBFunctions/Variables.php';
 $username = $_SESSION['username'];
 
 if (isset($_POST["save_budget"])) {
@@ -36,7 +38,9 @@ if(isset($_POST["saving"])){
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
+
     $saving_amount = $row ? $row["savings"]: 0;
+
     $stmt->close();
 }
 ?>
