@@ -125,9 +125,7 @@ if(isset($_POST["saving"])){
         }
 
         function Autofill(y,m,w){
-           
-            console.log(y);
-            
+
         if(y==""&& w==""&& m=="")
         {
              window.alert("Please Allocate Budget to Atleast one field");
@@ -142,20 +140,19 @@ if(isset($_POST["saving"])){
             }
             else{
                 y=w*52;
-                document.getElementById("yearly_budget").value=y;
+                document.getElementById("yearly_budget").value=parseInt(y);
             }
         }
         else if(m==""){
-            if(w!=="")
-        {
-            m=w*4;
-            document.getElementById("monthly_budget").value=m;
-        }
-        else{
-            m=y/12;
-            document.getElementById("monthly_budget").value=m;
+            if(w!=""){
+                m=w*4;
+                document.getElementById("monthly_budget").value=m;
+            }
+            else{
+                m=y/12;
+                document.getElementById("monthly_budget").value=m;
 
-        }
+            }
 
         }
         else if(w==""){
