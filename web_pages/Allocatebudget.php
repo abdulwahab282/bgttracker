@@ -76,6 +76,7 @@ if(isset($_POST["saving"])){
                                     <input type="number" class="form-control" id="weekly_budget" name="weekly_budget" required>
                                 </div>
                                 <button type="button" class="btn btn-primary" name="autoallocate" onclick="Autofill(document.getElementById('yearly_budget').value,document.getElementById('monthly_budget').value, document.getElementById('weekly_budget').value);">AutoFill values</button>
+                                <button type="Reset" class="btn btn-primary">Reset</button>
 
                                 <button type="submit" class="btn btn-primary" name="save_budget" style="margin-left:74.5%;" onclick="">Submit</button>
                             </div>
@@ -125,7 +126,7 @@ if(isset($_POST["saving"])){
         }
 
         function Autofill(y,m,w){
-
+                    
         if(y==""&& w==""&& m=="")
         {
              window.alert("Please Allocate Budget to Atleast one field");
@@ -136,23 +137,34 @@ if(isset($_POST["saving"])){
         {
             if(m!=""){
                 y=m*12;
-                document.getElementById("yearly_budget").value=y;
+                document.getElementById("yearly_budget").value=parseInt(y);
+                if(w==""){
+                    w=m/4;
+                    document.getElementById("weekly_budget").value=parseInt(w);
+                }
             }
             else{
                 y=w*52;
                 document.getElementById("yearly_budget").value=parseInt(y);
+                if(m==""){
+                    m=w*4;
+                    document.getElementById("monthly_budget").value=parseInt(m);
+                }
             }
         }
         else if(m==""){
-            if(w!=""){
-                m=w*4;
-                document.getElementById("monthly_budget").value=m;
-            }
-            else{
-                m=y/12;
-                document.getElementById("monthly_budget").value=m;
+            if(w!=="")
+        {
+            m=w*4;
+            document.getElementById("monthly_budget").value=m;
+        }
+        else{
+            m=y/12;
+            w=m/4;
+            document.getElementById("monthly_budget").value=parseInt(m);
+            document.getElementById("weekly_budget").value=parseInt(w);
 
-            }
+        }
 
         }
         else if(w==""){
@@ -166,7 +178,10 @@ if(isset($_POST["saving"])){
         else
             {
                 w=m/4;
-            document.getElementById("weekly_budget").value=w;
+                y=w*52;
+            document.getElementById("weekly_budget").value=parseInt(w);
+            document.getElementById("yearly_budget").value=parseInt(y);
+
 
             }
         }
