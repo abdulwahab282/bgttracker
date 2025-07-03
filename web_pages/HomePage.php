@@ -67,13 +67,13 @@
                     <div class="card-body">
                         <h2 class="card-title mb-4">Budget Overview</h2>    
                         <div class="row">
+                            <form method="post" action="">
                             <select name="budget_time" onchange="this.form.submit()" style="background-color:darkkhaki; color:teal; display: inline-block; width:30%; margin-left:2%;">
                                 <option value="monthly_budget" <?php if(isset($choice) && $choice == "monthly_budget") echo "selected"; ?>>Monthly</option>
                                 <option value="weekly_budget" <?php if(isset($choice) && $choice == "weekly_budget") echo "selected"; ?>>Weekly</option>
                                 <option value="yearly_budget" <?php if(isset($choice) && $choice == "yearly_budget") echo "selected"; ?>>Yearly</option>
                             </select>
                             <div class="col-md-6" style="display:inline;">
-                            <form method="post" action="">
                             <p style="display:inline">Running Budget: </p>
                             <?php echo "<div style='
                             border-radius:18%; display:inline; background-color:darkseagreen; color: black; font-size: xl; padding-top: 1%; padding-bottom: 1%; padding-left: 2%; padding-right: 2%;'>

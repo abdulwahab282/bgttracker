@@ -7,9 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
-</head>
 <?php
-    include 'DBFunctions/Variables.php';
+session_start();
+if (!isset($_SESSION['username'])) {
+    echo "User not logged in.";
+    exit();
+}
+include 'DBFunctions/Variables.php';
 ?>
 <body>
     <div class="container py-4">        <div class="card">
@@ -19,10 +23,21 @@
                         <img src="../Images/Profile.jpg" alt="Profile" class="rounded-circle img-fluid mb-3" 
                              style="width: 200px; height: 200px; object-fit: cover;">
                              <div class="text-center">
-                    <button onclick="window.location.href='../index.php' <?php session_destroy(); ?>"  
+                            <form method="POST">
+                             <button name = 'logout' type="submit"  
                             class="btn btn-danger btn-lg">
-                        Logout
-                    </button>
+                            Logout
+                            </button>
+                            </form>
+<?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+        session_start();
+        session_unset();
+        session_destroy();
+        header("Location: ../index.php");
+        exit();
+    }
+?>
                 </div>
                     </div>
                     <div class="col-md-9">

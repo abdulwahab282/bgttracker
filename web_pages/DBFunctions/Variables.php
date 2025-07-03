@@ -6,15 +6,7 @@
 
     session_start();
     
-    try {
-        if (!isset($_SESSION["username"])) {
-            throw new Exception("Error, User not logged in.");
-        }
-        $username = $_SESSION["username"];
-    } catch (Exception $e) {
-        // Handle the error, e.g., redirect or show an error message
-        die( $e->getMessage());
-    }
+    $username=$_SESSION["username"];
 
     //HOMEPAGE
 
@@ -65,9 +57,25 @@
         $result = $stmt->get_result();
         $row = $result -> fetch_assoc();
 
-        $running_budget = $row[$option];
+        $budget = $row[$option];
 
-        return $running_budget;
+        return $budget;
+    }
+
+    $budget_display = showbudget("monthly_budget");
+    if(isset($_POST["budget_time"])){
+        $choice = $_POST["budget_time"];
+        switch($choice){
+            case "weekly_budget":
+                $budget_display=showbudget("weekly_budget");
+                break;
+            case "monthly_budget":
+                $budget_display=showbudget("monthly_budget");
+                break;
+            case "yearly_budget":
+                $budget_display=showbudget("yearly_budget");
+                break;
+        }
     }
 
 //EXPENSES:

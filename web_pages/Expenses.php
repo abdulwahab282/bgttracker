@@ -16,20 +16,8 @@ include 'DBFunctions/Variables.php';
 <body>
     <div class="container py-4">
         <h2 class="text-center mb-4">Expense Categories</h2>
-        
-        <div class="row mb-4">
-            <div class="col-md-6 mx-auto">
-                <select class="form-select">
-                    <option selected>Select Period</option> <!--Todo, make this period setting work -->
-                    <option value="yearly">Yearly</option>
-                    <option value="monthly">Monthly</option>
-                    <option value="weekly">Weekly</option>
-                </select>
-            </div>
-        </div>
-
         <!-- Expense Summary Cards -->
-        <div class="row mb-4">
+        <div class="col- mb-4">
             <div class="col-md-6 mx-auto">                <div class="card">
                     <div class="card-body">                        <div class="prevPage">
                     <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.php'" alt="Previous Page">
@@ -97,8 +85,8 @@ include 'DBFunctions/Variables.php';
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
+        <div class="col mb-4">
+            <div class="card">
                 <div class="list-group">
                     <!-- Transport -->
                     <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">

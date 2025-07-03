@@ -9,7 +9,11 @@
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
 </head>
 <?php
-
+    session_start();
+if (!isset($_SESSION['username'])) {
+    echo "User not logged in.";
+    exit();
+}
     require_once(__DIR__ . '/../DB_connect.php');
     require_once(__DIR__ . '/DBFunctions/CreditDebit.php');
 

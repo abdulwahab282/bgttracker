@@ -1,7 +1,6 @@
 <?php
     require_once(__DIR__ . '/../../DB_Connect.php');
-    session_start();
-    $username = $_SESSION["username"];
+        $username = $_SESSION["username"];
     
     function credit_acc($category){
 
