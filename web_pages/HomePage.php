@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
 <?php
+    session_start();
+    if(!isset($_SESSION["username"]) && !isset($_SESSION["password"]))
+    {
+        echo "User is not logged in, please log back in: <a href=../index.php>Login</a>";
+        die();
+    }
     include ("DBFunctions/Variables.php");
     $budget_display = showbudget("monthly_budget");
     if(isset($_POST["budget_time"])){
@@ -35,15 +41,8 @@
                                 <img src="../Images/Profile.jpg" alt="Profile" class="rounded-circle img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;" onclick="window.location.href='Profile.php'">
                             </div>
                             <div class="col-md-10">
-                                <h2 class="card-title mb-4">Profile Information - <?php echo"$username" ?></h2>
+                                <h2 class="card-title mb-4">Profile Information - <?php echo date("d/m/Y")."<hr>"."Username: "."$username";?></h2>
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <p class="mb-2">Account Creation: <span class="badge bg-info">
-                                        <?php
-                                        echo "$account_creation";
-                                        ?>
-                                        </span></p>
-                                    </div>
                                     <div class="col-md-3">
                                         <p class="mb-2">Total Balance: <span class="badge bg-success">
                                             <?php

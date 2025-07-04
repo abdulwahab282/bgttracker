@@ -11,6 +11,12 @@
     <link href="https://fonts.cdnfonts.com/css/old-newspaper" rel="stylesheet">
 
 <?php
+session_start();
+if(!isset($_SESSION["username"]) && !isset($_SESSION["password"]))
+{
+    echo "User is not logged in, please log back in: <a href=../index.php>Login</a>";
+    die();
+}
 include '../DB_connect.php';
 include 'DBFunctions/Variables.php';
 $username = $_SESSION['username'];
@@ -32,6 +38,12 @@ if(isset($_POST["saving"])){
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ds", $amount, $username);
     $stmt->execute();
+    
+    $sql = "UPDATE user SET total_credit=total_credit - ? where username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ds", $amount ,$username);
+    $stmt->execute();
+    
     $sql = "SELECT savings from user where username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
@@ -82,25 +94,24 @@ if(isset($_POST["saving"])){
                                 <button type="button" class="btn btn-primary" name="autoallocate" onclick="Autofill(document.getElementById('yearly_budget').value,document.getElementById('monthly_budget').value, document.getElementById('weekly_budget').value);">AutoFill values</button>
                                 <button type="Reset" class="btn btn-primary">Reset</button>
 
-                                <button type="submit" class="btn btn-primary" name="save_budget" style="margin-left:74.5%;" onclick="">Submit</button>
+                                <button type="submit" class="btn btn-primary" name="save_budget" style="margin-left:80%;" onclick="">Submit Budget</button>
                             </div>
-
-                                
                         </form>
                             <!-- Credit Savings -->
-                            <div class="mb-4">
-                                <form method="POST" action="">
-                                <label for="credit_saving" class="form-label">Credit saving account</label>
-                                <div class="input-group" style="width: 50%;">
-                                    <input type="number" class="form-control" name="saving" required>
-                                <button type="submit" style="margin-left:12%;" class="btn btn-primary" name="credit_saving" onclick="BudgetVerify(document.getElementByName('yearly_budget').value,document.getElementByName('monthly_budget').value, document.getElementByName('weekly_budget').value)">Submit</button>
+                            <div class="mb-4 d-flex justify-content-start align-items-center">
+                                <form method="POST" action="" class="d-flex align-items-center">
+                                    <label for="credit_saving" class="form-label me-2 mb-0">Credit saving account</label>
+                                    <div class="input-group" style="width: 150px;">
+                                        <input type="number" class="form-control" name="saving" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ms-2" name="credit_saving" onclick="BudgetVerify(document.getElementById('yearly_budget').value,document.getElementById('monthly_budget').value, document.getElementById('weekly_budget').value)" method="POST">Submit</button>
+                                    <h4 class="ms-3 mb-0">Total Savings: <span class="badge bg-primary"><?php echo "$saving_amount"?></span></h4>
                                 </form>
+                            </div>
+                            </form>
                                 </div>
                             </div>
                         </form>
-                        <div class="text-center">
-                            <h4>Total Savings: <span class="badge bg-primary"><?php echo "$saving_amount"?></span></h4>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -3,8 +3,6 @@
     //This file contains all the data fetched from the DB that needs to be displayed on the FrontEnd.
 
     require_once(__DIR__ . '/../../DB_Connect.php');
-
-    session_start();
     
     $username=$_SESSION["username"];
 
@@ -145,7 +143,13 @@ $sql="SELECT SUM(total_amount) FROM transcation WHERE username=? and Type='Debit
     $result = $stmt->get_result();
     $row = $result -> fetch_assoc();
     $stmt->close();
-    $avg_total= round($row['AVG(total_amount)']);
+    if($row['AVG(total_amount)'] != NULL)
+    {
+        $avg_total= round($row['AVG(total_amount)']);
+    }
+    else{
+        $avg_total = 0;
+    }
 
     $sql="SELECT AVG(total_amount) FROM transcation where username=? and  type='Debit'";
     $stmt = $conn->prepare($sql);
@@ -154,6 +158,12 @@ $sql="SELECT SUM(total_amount) FROM transcation WHERE username=? and Type='Debit
     $result = $stmt->get_result();
     $row = $result -> fetch_assoc();
     $stmt->close();
-    $avg_Debit= round($row['AVG(total_amount)']);
+    if($row['AVG(total_amount)'] != NULL)
+    {
+        $avg_Debit= round($row['AVG(total_amount)']);
+    }
+    else{
+        $avg_Debit = 0;
+    }
 
 ?>

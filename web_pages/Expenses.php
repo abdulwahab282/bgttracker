@@ -1,4 +1,10 @@
 <?php
+session_start();
+if(!isset($_SESSION["username"]) && !isset($_SESSION["password"]))
+{
+    echo "User is not logged in, please log back in: <a href=../index.php>Login</a>";
+    die();
+}
 include '../DB_Connect.php';
 include 'DBFunctions/Variables.php';
 ?>
@@ -16,12 +22,13 @@ include 'DBFunctions/Variables.php';
 <body>
     <div class="container py-4">
         <h2 class="text-center mb-4">Expense Categories</h2>
-        <!-- Expense Summary Cards -->
-        <div class="col- mb-4">
-            <div class="col-md-6 mx-auto">                <div class="card">
-                    <div class="card-body">                        <div class="prevPage">
-                    <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.php'" alt="Previous Page">
-
+        <div class="row">
+            <!-- Progress Bars Column -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="prevPage mb-3">
+                            <img src="../Images/BookCorner_Flipped.jpg" onclick="window.location.href='HomePage.php'" alt="Previous Page">
                         </div>
                         <h4 class="card-title text-center mb-4">Total Expenses: RS <?php echo number_format($total_expenses, 2); ?></h4>
                         <div class="expense-summary">
@@ -35,7 +42,6 @@ include 'DBFunctions/Variables.php';
                                     <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Transport']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
                             </div>
-
                             <!-- Education -->
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
@@ -46,7 +52,6 @@ include 'DBFunctions/Variables.php';
                                     <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Education']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
                             </div>
-
                             <!-- Health -->
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
@@ -57,7 +62,6 @@ include 'DBFunctions/Variables.php';
                                     <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Health']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
                             </div>
-
                             <!-- Shopping -->
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
@@ -68,7 +72,6 @@ include 'DBFunctions/Variables.php';
                                     <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Shopping']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
                             </div>
-
                             <!-- Food -->
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between mb-1">
@@ -78,65 +81,65 @@ include 'DBFunctions/Variables.php';
                                 <div class="progress bg-light">
                                     <div class="progress-bar" style="width: <?php echo $total_expenses > 0 ? round($category_totals['Food']/$total_expenses*100) : 0; ?>%; background-color: #8b5e34;"></div>
                                 </div>
+                                <br>
+                                <p style="font-size:large; color:darkorange;">Note: Expense History can be found under Transaction History</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col mb-4">
-            <div class="card">
-                <div class="list-group">
-                    <!-- Transport -->
-                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
-                        <h5 class="mb-3">Transport</h5>
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
-                            <input type="hidden" name="category" value="Transport">
-                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
+            <!-- Add Transaction Cards Column -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="list-group" style="font-family: 'Old newspaper font', sans-serif;">
+                            <!-- Transport -->
+                            <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
+                                <h5 class="mb-3">Transport</h5>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                                    <input type="hidden" name="category" value="Transport">
+                                    <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
+                                </div>
+                            </form>
+                            <!-- Education -->
+                            <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
+                                <h5 class="mb-3">Education</h5>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                                    <input type="hidden" name="category" value="Education">
+                                    <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
+                                </div>
+                            </form>
+                            <!-- Health -->
+                            <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
+                                <h5 class="mb-3">Health</h5>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                                    <input type="hidden" name="category" value="Health">
+                                    <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
+                                </div>
+                            </form>
+                            <!-- Shopping -->
+                            <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
+                                <h5 class="mb-3">Shopping</h5>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                                    <input type="hidden" name="category" value="Shopping">
+                                    <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
+                                </div>
+                            </form>
+                            <!-- Food -->
+                            <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
+                                <h5 class="mb-3">Food</h5>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
+                                    <input type="hidden" name="category" value="Food">
+                                    <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-
-                    <!-- Education -->
-                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
-                        <h5 class="mb-3">Education</h5>
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
-                            <input type="hidden" name="category" value="Education">
-                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
-                        </div>
-                    </form>
-
-                    <!-- Health -->
-                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
-                        <h5 class="mb-3">Health</h5>
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
-                            <input type="hidden" name="category" value="Health">
-                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
-                        </div>
-                    </form>
-
-                    <!-- Shopping -->
-                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
-                        <h5 class="mb-3">Shopping</h5>
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
-                            <input type="hidden" name="category" value="Shopping">
-                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
-                        </div>
-                    </form>
-
-                    <!-- Food -->
-                    <form method="POST" action="" class="list-group-item bg-transparent border-light mb-3">
-                        <h5 class="mb-3">Food</h5>
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="expense_amount" placeholder="Enter amount" required>
-                            <input type="hidden" name="category" value="Food">
-                            <button class="btn btn-primary" type="submit" name="add_expense">Add</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -2,23 +2,21 @@
     require_once(__DIR__ . '/../../DB_Connect.php');
         $username = $_SESSION["username"];
     
-    function credit_acc($category){
+    function credit_acc($category,$amount){
 
         global $conn;
         global $username;
 
-        $newAmount = $_POST["credit_amount"];
-
         $sql = "UPDATE user SET Total_credit = Total_credit + ? WHERE username = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ds", $newAmount, $username);
+        $stmt->bind_param("ds", $amount, $username);
         $stmt->execute();
         $sql = "INSERT into transcation(username,Transcation_id,total_amount,Category,Type) values(?,?,?,?,'Credit')";
         $stmt = $conn->prepare($sql);
         
         $tId=time(); //Time will always be different so Transaction IDs will remain unique.
         
-        $stmt->bind_param("sids", $username, $tId, $newAmount, $category);
+        $stmt->bind_param("sids", $username, $tId, $amount, $category);
         $stmt->execute();
         $stmt->close();
     }
